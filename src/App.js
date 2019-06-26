@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Form from './Form'
-import DarkSkyApi from 'dark-sky-api';
+// import DarkSkyApi from 'dark-sky-api';
 import './CSS/index.scss';
 
 const API_KEY = 'c6e5fa0baf121d492ea445e4808ba14d'
@@ -19,21 +19,26 @@ class App extends React.Component {
     description: undefined,
     error: undefined
   }
+
   getWeather = async (e) => {
     e.preventDefault();
-    const city = e.target.elements.city.value ;
-    const country = e.target.elements.country.value;
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}`);
+    const zipcode = e.target.elements.zipcode.value ;
+    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode},us&APPID=${API_KEY}`);
     const data = await api_call.json();
     console.log(data);
     this.setState({
-      temperature: data.main.temp,
-      city: data.name,
-      country: data.syts.country,
-      humidity: data.main.humidity,
-      description: data.weather[0].description,
+      temperature: data.list.map(item => item.main.temp),
+      city: data.city.name,
+      country: data.city.country,
+      humidity: data.list.map(item => item.main.humidity),
+      description: data.list.map(item => item.weather.map(item2 => item2.description)),
       error: ''
     })
+    console.log('temp', this.state.temperature)
+    console.log('city', this.state.city)
+    console.log('country', this.state.country)
+    console.log('humidity', this.state.humidity)
+    console.log('description', this.state.description)
   }
 
   render(){
