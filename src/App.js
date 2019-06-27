@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
-import Form from './Form'
-// import DarkSkyApi from 'dark-sky-api';
+import Aside from './Aside';
+import Footer from './Footer';
 import './CSS/index.scss';
 
 const API_KEY = 'c6e5fa0baf121d492ea445e4808ba14d'
@@ -25,7 +25,7 @@ class App extends React.Component {
     const zipcode = e.target.elements.zipcode.value ;
     const api_call = await fetch(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode},us&APPID=${API_KEY}`);
     const data = await api_call.json();
-    console.log(data);
+    // console.log(data);
     this.setState({
       temperature: data.list.map(item => item.main.temp),
       city: data.city.name,
@@ -45,7 +45,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        <Form getWeather={this.getWeather}/>
+        <Aside getWeather={this.getWeather}/>
+        <Footer />
       </div>
     );
   }  
