@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Aside from './Aside';
+import PanelContainer from './PanelContainer'
 import Footer from './Footer';
 import './CSS/index.scss';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
     country: undefined,
     humidity: undefined,
     description: undefined,
+    date: undefined,
     error: undefined
   }
 
@@ -32,13 +34,16 @@ class App extends React.Component {
       country: data.city.country,
       humidity: data.list.map(item => item.main.humidity),
       description: data.list.map(item => item.weather.map(item2 => item2.description)),
+      date: data.list.map(item => item.dt_txt),
       error: ''
     })
+    
     console.log('temp', this.state.temperature)
     console.log('city', this.state.city)
     console.log('country', this.state.country)
     console.log('humidity', this.state.humidity)
     console.log('description', this.state.description)
+    console.log('date', this.state.date)
   }
 
   render(){
@@ -46,6 +51,7 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <Aside getWeather={this.getWeather}/>
+        <PanelContainer forecast={this.state}/>
         <Footer />
       </div>
     );

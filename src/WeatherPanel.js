@@ -1,5 +1,4 @@
 import React from 'react';
-import './WeatherPanel.scss';
 
 const WeatherPanel = () => {
   return (
